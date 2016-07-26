@@ -1,4 +1,3 @@
-// specPA1.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
 #include <iostream>
 #include <cstring>
@@ -38,6 +37,7 @@ void naiveStringMatching(string T, string P){
 
 
 //PA1 - Karp
+//reference
 //orice secventa de m caractere (simbol) - stocate intr-un hash table foarte mare, pt a evita coliziunea
 //testeaza pattern p contra unui subsir de lungime m <=> hash da aceeasi valoare pt p si m
 	//pt pattern - hash este calculat o singura data
@@ -50,7 +50,7 @@ inline long REHASH(char a, char b, int h){
 }
 int RK(char *p, int m, char *s, int n){
 	long d, hs, hp, i, j;
-	/* Preprocesare */
+	/* Preprocessing */
 	for (d = i = 1; i < m; ++i)
 		d = (d << 1);
 	for (hp = hs = i = 0; i < m; ++i)
@@ -58,7 +58,7 @@ int RK(char *p, int m, char *s, int n){
 		hp = ((hp << 1) + p[i]);
 		hs = ((hs << 1) + s[i]);
 	}
-	/* Cautare */
+	/* Search */
 	i = 0;
 	while (i <= n - m){
 		if (hp == hs && memcmp(p, s + i, m) == 0)
@@ -69,7 +69,7 @@ int RK(char *p, int m, char *s, int n){
 	return -1;
 }
 
-//din Cormen
+//source: Cormen - ITA
 /*
 void RabinKarpMatcher(string T, string P, char d, int q){
 	int n, m;
@@ -90,16 +90,16 @@ void RabinKarpMatcher(string T, string P, char d, int q){
 	p = 0;
 	t0 = 0;
 
-	//preprocesare
+	//preprocessing
 	for (i = 1; i <= m; i++) //<= ?
 	{
 		p = (d*p + P[i]) % q;
 		t0 = (d*t0 + T[i]) % q;
 	}
 	//matching
-	for (s = 0; s < n - m; s++)//pp ca nu <= ?
+	for (s = 0; s < n - m; s++)//presume not <= ?
 	{
-		if (p == ts)	//ce este ts ?
+		if (p == ts)	//what is ts ?
 		{
 			if (P[1...m] == T[s + 1...s + m])
 				cout << "Pattern occurs with shift" << s;
@@ -111,7 +111,7 @@ void RabinKarpMatcher(string T, string P, char d, int q){
 
 }
 */
-//PA2-Boyer-Moore - versiunea 1
+//PA2-Boyer-Moore - version 1
 /*
 int BM(s, n, p, m, salt){
 	int i, j;	
@@ -124,15 +124,15 @@ int BM(s, n, p, m, salt){
 		else if ((m - j) > salt[s[i]]) i = i + m - j;
 		else i = i + salt[s[i]];
 		j = m - 1;
-	until(j<0 or i>n - 1); //se traduce prin do...while(j>0 && i>n-1)
+	until(j<0 or i>n - 1); //translates to - do...while(j>0 && i>n-1)
 		if (j<0) return i + 1;
 		else return -1;
 }
 */
 
-//PA3 - functia esec - algoritm
+//PA3 - failure function algorithm
 /*
-void determinaF(p, m, f) {
+void computeF(p, m, f) {
 	f[0] = -1;
 	for (j = 1; j < m; j = j + 1) {
 		k = f[j - 1];
@@ -150,34 +150,29 @@ KMP(s, n, p, m, f) {
 		while (j != -1) && (p[j] != s[i])
 			j = f[j];
 		if (j = m - 1)
-			return i - m + 1; /* gasit p in s */
+			return i - m + 1; /* p found in s */
 /*
 		else {
 			i = i + 1;
 			j = j + 1;
 		}
 	}
-	return -1; /* p nu apare in s */
+	return -1; /* p not to be found in s */
 //}	
 
 int main()
 {
 	/*
-	char ch2str[100];//const
-	cout << "French fries, nigga ! ";
-	cin >> ch2str;
 	string str(ch2str);
 	cout << "The size of str is " << str.length() << " bytes.\n";
 	*/
 	//cout << "The size of str is " << strlen(str) << " bytes.\n"; //niet, doar const char/char.
 
-
-
 	char ch2str[100];
-	cout << "\nDati string principal: ";
+	cout << "\nInput main string: ";
 		cin.getline(ch2str,100);
 	string search(ch2str);
-	cout << "\nDati string de cautat: ";
+	cout << "\nInput search string: ";
 		cin.getline(ch2str, 100);
 	string toSearch(ch2str);
 

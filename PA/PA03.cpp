@@ -1,4 +1,3 @@
-// PA03.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
@@ -20,7 +19,7 @@ void ReadList(int n){
 }
 
 
-bool check[MAX_LIST][MAX_LIST]; // este setat by default cu false
+bool check[MAX_LIST][MAX_LIST]; // set by default with false
 Punct minPct;
 
 Punct closestPair(int n){
@@ -94,13 +93,13 @@ int main()
 	Punct rez;
 	rez = closestPair(n);
 
-	cout << "\n\nCea mai apropiata pereche este: " << rez.x + 1 <<" si "<< rez.y + 1;
+	cout << "\n\nClosest pair is: " << rez.x + 1 <<" si "<< rez.y + 1;
 
 
 	//PR!2
 	Punct P;
-	cout << "\n\n\nDati punctul P: "; cin >> P.x; cin >> P.y;
-	cout << "\nCel mai apropiat vecin a lui P este: " << nearest_neighbour(P,n);
+	cout << "\n\n\nInput point P (x and y): "; cin >> P.x; cin >> P.y;
+	cout << "\nNearest neighbour of P is: " << nearest_neighbour(P,n);
 
 
 	return 0;

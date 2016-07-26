@@ -1,14 +1,13 @@
-// specPA2.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
 #include <iostream>
-//pentru regex
+//for regex
 #include <regex>
 
 //pentru parsator
-#include <cstring> //eventuale functii pe char
-#include <string> //pentru citire string
-#include <cctype> //pentru verificare caracter alfabet
-#define MAX_PROTO 200 //maximul de solutii din L(e) posibile
+#include <cstring> //eventual functions for char
+#include <string> //string read
+#include <cctype> //alphabet character check
+#define MAX_PROTO 200 //maximum possible solutions from L(e)
 
 using namespace std;
 
@@ -40,7 +39,7 @@ int parseFormula(string form){
 				BraceOpen--;
 			else return -1;
 		}
-		else if (isalpha(form[i])) //alternativa: foloseste codul ASCII
+		else if (isalpha(form[i])) //alternative: use ASCII code
 		{
 			if (buffer != '~')
 			{
@@ -73,7 +72,7 @@ int parseFormula(string form){
 
 }
 
-//parse V.2 => facut la seminarul special
+//parse V.2 => made in special seminary class
 // s=((a+ab)*ba)
 //Prima si ultima paranteza pot fi scoase la procesare.
 
@@ -190,10 +189,6 @@ string parse(string S){ //definesc un struct tree ?
 }
 
 
-
-
-
-
 int main()
 {
 //experimentare cu pachetul regex din C++
@@ -222,7 +217,6 @@ int main()
 		//showSolutions(); //sau ceva in genul ?
 
 	}
-
 	*/
 
 	//parse V.2 ......................................

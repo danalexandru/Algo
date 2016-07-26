@@ -1,4 +1,3 @@
-// recap01stringpatterns.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
@@ -14,24 +13,24 @@ String Matching
 #define nMax 1000
 #define mMax 255
 
-int Urm[mMax];
+int Next[mMax];
 char Te[nMax], Pe[mMax];
 int n, m;
 
-void Urmatorul(char *P)
+void Next(char *P)
 {
 	int k = -1, x;
-	Urm[0] = 0;
+	Next[0] = 0;
 	for (x = 1; x<m; x++){
-		while (k>0 && P[k + 1] != P[x]) k = Urm[k];
+		while (k>0 && P[k + 1] != P[x]) k = Next[k];
 		if (P[k + 1] == P[x]) k++;
-		Urm[x] = k;
+		Next[x] = k;
 	}
 }
 
 int main()
 {
-	//naiva
+	//naive
 	string T, P;
 	cout << "String T: ";
 	cin >> T;
@@ -48,16 +47,16 @@ int main()
 	f.getline(Pe, 255);
 
 	n = strlen(Te); m = strlen(Pe);
-	Urmatorul(Pe);
+	Next(Pe);
 
 	for (i = 0; i<n; i++)
 	{
-		while (x>0 && Pe[x + 1] != Te[i]) x = Urm[x];
-		if (Pe[x + 1] == Te[i]) x++;//s-au potrivit
+		while (x>0 && Pe[x + 1] != Te[i]) x = Next[x];
+		if (Pe[x + 1] == Te[i]) x++; //match
 		if (x == m - 1)
 		{
-			cout << "Am gasit subsirul in pozitia " << i - m + 1 << endl;
-			x = Urm[x];
+			cout << "Found substring at position " << i - m + 1 << endl;
+			x = Next[x];
 		}
 	}
 	//g.close();
