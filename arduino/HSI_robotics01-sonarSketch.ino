@@ -1,6 +1,6 @@
 /*
-  se invarte in cercuri ?? asta inseamna ca un motor e dus
-  actualizeaza miscarea servo cu ceva in genul asta:
+
+  update servo movement with something like this:
     for(pos = 45; pos <= 135; pos += 1) // goes from 0 degrees to 180 degrees 
   {                                  // in steps of 1 degree 
     myservo.write(pos);              // tell servo to go to position in variable 'pos' 
@@ -43,7 +43,7 @@ void setup() {
  pinMode(BIN1, OUTPUT);
  pinMode(BIN2, OUTPUT);
  pinMode(AIN1, OUTPUT);
- pinMode(AIN2, OUTPUT); //AIN2 ?
+ pinMode(AIN2, OUTPUT); 
 
   //sonar
   Serial.begin (9600);
@@ -75,11 +75,11 @@ void back(){//ok ?
 
 int pulse(){
    long duration, distance;
-  digitalWrite(trigPin, LOW);  // Added this line
-  delayMicroseconds(2); // Added this line
+  digitalWrite(trigPin, LOW);  
+  delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
-//  delayMicroseconds(1000); - Removed this line
-  delayMicroseconds(10); // Added this line
+//  delayMicroseconds(1000);
+  delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = (duration/2) / 29.1;
@@ -96,18 +96,17 @@ void loop() {
   
   if (distance < 4) {  // This is where the LED On/Off happens
     digitalWrite(led,HIGH); // When the Red condition is met, the Green LED should turn off
-    //my servo something if
      stall();
      
-     myservo.write(135);
+     myservo.write(135); //check right
      distance = pulse();
      
      if(distance < 4){
-       myservo.write(45);
+       myservo.write(45); //checks left
        distance = pulse();
        
        if(distance < 4){
-        Serial.println("dead end, nigga");
+        Serial.println("obstacles front");
         //back();
         stall();
        }
@@ -139,6 +138,4 @@ void loop() {
   }
   delay(200);
 
-  
 }
-
