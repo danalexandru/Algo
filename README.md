@@ -1,7 +1,12 @@
 # Algo
-some code samples
-
-TODO:
-* ProcessingJS and more Arduino to be added
-* C# samples to be added
-* Python samples to be added
+a bit of everything
+  
+  
+This repo is for **algorithms**, **faculty code**, or generally for **side projects** that don't need yet a dedicated repo.
+  
+### Contents
+  
+Here are 3 types of work:
+  - standalone folders - for now, only `arduino/` stuff
+  - code folders - interesting aspects, starter code ... - `code-*/`
+  - faculty code folders - implemented algorithms, homeworks - `FII-*/`
