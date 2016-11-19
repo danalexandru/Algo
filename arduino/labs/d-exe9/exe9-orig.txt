@@ -1,0 +1,128 @@
+ /*
+#define BUTTON1 A1
+#define BUTTON2 A2
+#define BUTTON3 A3
+ 
+void setup()
+{
+  Serial.begin(9600);
+}
+ 
+void loop()
+{
+  if(!digitalRead(BUTTON1))
+  {
+    Serial.println(" btn1           "); 
+  }
+ 
+  if(!digitalRead(BUTTON2))
+  {
+    Serial.println(" btn2           "); 
+  }
+  if(!digitalRead(BUTTON3))
+  {
+    Serial.println(" btn3           "); 
+  }
+}
+*/
+/*
+/ use this option for OSX:
+char ctrlKey = KEY_LEFT_GUI;
+// use this option for Windows and Linux:
+//  char ctrlKey = KEY_LEFT_CTRL;  
+
+void setup() {
+  // make pin 2 an input and turn on the 
+  // pullup resistor so it goes high unless
+  // connected to ground:
+  pinMode(2, INPUT_PULLUP);
+  // initialize control over the keyboard:
+  Keyboard.begin();
+}
+
+void loop() {
+  while (digitalRead(2) == HIGH) {
+    // do nothing until pin 2 goes low
+    delay(500);
+  }
+  delay(1000);
+  // new document:
+  Keyboard.press(ctrlKey);
+  Keyboard.press('n');
+  delay(100);
+  Keyboard.releaseAll();
+  // wait for new window to open:
+  delay(1000);
+}
+ */
+//#include <Keyboard.h>
+//#define KEY_LEFT_CTRL 0x80
+
+//char ctrlKey = KEY_LEFT_CTRL;  
+
+const int button1Pin = 2;     // the number of the pushbutton pin
+const int button2Pin = 3;     // the number of the pushbutton pin
+const int button3Pin = 4;     // the number of the pushbutton pin
+const int ledPin =  13;      // the number of the LED pin
+
+// variables will change:
+int button1State = 0;         // variable for reading the pushbutton status
+int button2State = 0;         // variable for reading the pushbutton status
+int button3State = 0;         // variable for reading the pushbutton status
+
+void setup() {
+   //Keyboard.begin();
+  Serial.begin(9600);
+   
+  // initialize the LED pin as an output:
+  pinMode(ledPin, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(button1Pin, INPUT);
+  pinMode(button2Pin, INPUT);
+  pinMode(button3Pin, INPUT);
+}
+
+void loop() {
+  // read the state of the pushbutton value:
+  button1State = digitalRead(button1Pin);
+  button2State = digitalRead(button2Pin);
+  button3State = digitalRead(button3Pin);
+
+  // check if the pushbutton is pressed.
+  // if it is, the buttonState is HIGH:
+  /*if (button1State == HIGH || button2State == HIGH || button3State == HIGH) {
+    // turn LED on:
+    digitalWrite(ledPin, HIGH);
+  } else {
+    // turn LED off:
+    digitalWrite(ledPin, LOW);
+  }*/
+
+  //delay(1000);
+  // new document:
+  if (button1State == HIGH){
+    //Keyboard.press(ctrlKey);
+    //Keyboard.press('n');
+    Serial.println("1");
+    
+    delay(100);
+    //Keyboard.releaseAll();
+  } else if(button2State == HIGH){
+    //Keyboard.press(ctrlKey);
+    //Keyboard.press('t');
+    Serial.println("2");
+    
+    delay(100);
+    //Keyboard.releaseAll();
+  } else if(button3State == HIGH){
+    //Keyboard.press(ctrlKey);
+    //Keyboard.press('r');
+    Serial.println("3");
+    
+    delay(100);
+    //Keyboard.releaseAll();
+  }
+  // wait for new window to open:
+  delay(1000);
+  
+}
