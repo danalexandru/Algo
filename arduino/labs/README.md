@@ -26,4 +26,10 @@ Source here: [profs.info.uaic.ro/~vcosmin/dsfum](http://profs.info.uaic.ro/~vcos
 	c. eliminare completa a unui produs oarecare deja adaugat (tot din butoane). - 2pt
 	d. eliberare bon (se vor afisa informatiile finale legate de comanda: produse, preturi individuale (sau pentru produse multiple), pret total. Informatiile vor fi transmise pe portul serial catre consola Arduino. - 2pt
 16. Text care defileaza cu viteza reglabila de la dreapta la stanga, viteza se va modifica din butoanele de pe LCD "Welcome to DSFUM Text LCD Lab !!!" - 2pt
+24. Folosind un LCD grafic, implementati o serie de comenzi care sa afiseze primitive grafice parametrizate prin consola seriala:
+	+ circle(x,y,raza,color) - 4pt
+	+ rectangle(x,y,width,height,color) - 1pt
+	+ line(x1,y1,x2,y2,color) - 2pt
+	+ triangle(x1,y1,x2,y2,x3,y3,color) - 1pt
+Apoi folosind primitivele, desenati o casa si o masina - 3pt
 ```
