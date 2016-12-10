@@ -1,2 +1,5 @@
 
 #Ignore these
+hello-django.py
+code-various/mysite/*
+teaching-practice/blender_*.py
