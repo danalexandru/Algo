@@ -2,9 +2,13 @@
 #Ignore these
 hello-django.py
 code-various/mysite/*
-teaching-practice/blender_*.py
+
 FII-SI/**/word_dict.txt
 FII-SI/test/*
 FII-SI/**/*.zip
 FII-SI/exe1/*
 FII-SI/exe2/*
+
+# Ignore data files
+**/safe_*
+**/safe/*
