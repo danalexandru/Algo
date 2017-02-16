@@ -7,7 +7,7 @@ This repo is for **algorithms**, **faculty code**, or generally for **side proje
 ### Contents
   
 Here are 3 types of work:
-  - standalone folders - for now, only `arduino/` stuff
+  - standalone folders - for now, only `arduino/` stuff (includes labs from faculty Arduino course)
   - code folders - interesting aspects, starter code ... - `code-*/`
   - faculty code folders - implemented algorithms, homeworks - `FII-*/`
 
