@@ -12,3 +12,7 @@ FII-SI/exe2/*
 # Ignore data files
 **/safe_*
 **/safe/*
+
+# Ignore compiled
+**/*.bin
+
