@@ -1,0 +1,11 @@
+{
+  "name": "hw2",
+  "version": "0.0.1",
+  "description": "a bit of everything",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
