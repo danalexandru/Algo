@@ -16,4 +16,5 @@ FII-SI/exe2/*
 # Ignore compiled
 **/*.bin
 **/node_modules/*
+**/.ipynb_checkpoints/*
 
