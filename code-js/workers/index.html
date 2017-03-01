@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Workers Demo</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
+    <!-- <link rel="stylesheet" href="main.css"> -->
+    <style>
+      .demo-ribbon {
+        width: 100%;
+        height: 40vh;
+        background-color: #3F51B5;
+        -webkit-flex-shrink: 0;
+            -ms-flex-negative: 0;
+                flex-shrink: 0;
+      }
+
+      .demo-main {
+        margin-top: -35vh;
+        -webkit-flex-shrink: 0;
+            -ms-flex-negative: 0;
+                flex-shrink: 0;
+      }
+
+      .demo-header .mdl-layout__header-row {
+        padding-left: 40px;
+      }
+
+      .demo-container {
+        max-width: 1600px;
+        width: calc(100% - 16px);
+        margin: 0 auto;
+      }
+
+      .demo-content {
+        border-radius: 2px;
+        padding: 80px 56px;
+        margin-bottom: 80px;
+      }
+
+      .demo-layout.is-small-screen .demo-content {
+        padding: 40px 28px;
+      }
+
+      .demo-content h3 {
+        margin-top: 48px;
+      }
+
+      .demo-footer {
+        padding-left: 40px;
+      }
+
+      .demo-footer .mdl-mini-footer--link-list a {
+        font-size: 13px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Workers Demo</span>
+        </div>
+      </header>
+      <div class="demo-ribbon"></div>
+      <main class="demo-main mdl-layout__content">
+        <div class="demo-container mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+            <div class="demo-crumbs mdl-color-text--grey-500">
+              http://localhost:8080/
+            </div>
+            <h4><i class="material-icons">bookmark</i> Web workers</h4>
+              <!-- <p> <a href="/"><kbd>/</kbd></a> or <a href="/index.html"><kbd>/index.html</kbd></a> - <b>this</b> page </p> -->
+
+              <p id="status">Worker status</p>
+              <p><kbd id="result">Worker result here</kbd></p>
+
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="startWorker()">Start Worker</button> 
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="stopWorker()">Stop Worker</button>
+              
+            
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script>
+      function handleWorker(){
+        w.onmessage = function(event){
+            document.getElementById("result").innerHTML = event.data;
+
+            console.dir(event);
+            //if(event.data == 20){
+            //	stopWorker(); //stop worker on 20th iteration
+            //}
+        };
+      }
+
+      function startWorker(){
+        //check for web worker support
+        if(typeof(Worker) !== "undefined") {
+            if (typeof(w) == "undefined") {
+                w = new Worker("demo_workers.js");
+                document.getElementById("status").innerHTML = 'Worker started';
+
+                handleWorker();
+            } else {
+                document.getElementById("status").innerHTML = 'Worker variable already exists !';
+            }
+        } else {
+            document.getElementById("status").innerHTML = "Sorry! No Web Worker support.";
+        }
+      }
+
+      function stopWorker(){
+        w.terminate();
+        w = undefined;
+        document.getElementById("status").innerHTML = 'Worker terminated !';
+      }
+      
+
+      
+      //w.terminate();
+    </script>
+  </body>
+</html>
