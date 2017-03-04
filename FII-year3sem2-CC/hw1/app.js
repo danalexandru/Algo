@@ -3,7 +3,7 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var services = require('./services')
+var services = require('./server/services')
 
 
 var app = express();
