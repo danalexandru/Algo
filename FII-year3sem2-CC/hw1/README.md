@@ -4,6 +4,20 @@ a bit of everything
   
 ## CC
 
+### Install guide
+
+To run server: double-click `open_server.bat` or run in `cmd.exe` the command `npm start`
+To install extension:
++ navigate to `chrome://extensions/`
++ check `developer mode`
++ click `load unpacked extension` and select the folder `chrome_ext/`
++ see the new extension with the `D` icon and click
+
+Don't forget to run the server before opening the extension (will automate with some NPAPI alternative soon).
+
+
+
+## Extra resources
 [List of public apis](https://github.com/toddmotto/public-apis)  
 [Public apis site with tests](https://any-api.com/)
 
