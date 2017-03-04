@@ -4,7 +4,7 @@ var express = require('express');
 var request = require('request');
 var router = express.Router();
 
-var keysObject = JSON.parse(fs.readFileSync('keys.json', 'utf8'));
+var keysObject = JSON.parse(fs.readFileSync('server/api_keys/keys.json', 'utf8'));
 
 /* GET API page. */
 // router.get('/some_api', function (req, res) {
@@ -24,7 +24,7 @@ var weatherAPIkey = keysObject.weatherAPI;
 console.log("[API] weather API key is: ", weatherAPIkey);
 
 /* GET weather page */
-router.get('/weather', function (req, res) {
+router.get('/weather', function (req, res) { // /:city
 	if(weatherAPIkey[0] == '<'){
 		res.setHeader('Content-Type', 'application/json');
 		res.send(JSON.stringify(
@@ -35,11 +35,34 @@ router.get('/weather', function (req, res) {
 		res.setHeader('Content-Type', 'application/json');
 		request.get({
 		  url: 'http://api.openweathermap.org/data/2.5/weather?' +
-		  			'q=Iasi,RO'+
+		  			'q=' + 'Iasi,RO' + // req.params.city?req.params.city:'Iasi,RO' +
 		  			'&units=metric' + 
 		  			'&appid=' + weatherAPIkey
 		}, function(err, response, body) {
-		  res.send(JSON.stringify(JSON.parse(body), null, 2) );
+		  //full response
+		  //res.send(JSON.stringify(JSON.parse(body), null, 2) );
+		  var weatherObj = JSON.parse(body);
+		  var displayObj = {};
+
+		  displayObj.description = weatherObj.weather[0].description;
+		  //console.log('description: ', displayObj.description);
+		  
+		  displayObj.icon = weatherObj.weather[0].icon;
+		  //console.log('icon: ', displayObj.icon);
+
+		  displayObj.temp = weatherObj.main.temp;
+		  //console.log('temp: ', displayObj.temp);
+
+		  displayObj.name = weatherObj.name;
+		  //console.log('name: ', displayObj.name);
+
+		  displayObj.country = weatherObj.sys.country;
+		  //console.log('country: ', displayObj.country);
+
+		  res.send(JSON.stringify(
+		  	displayObj, 
+		  	null, 2) 
+		  );
 		})
 	}
 });
@@ -66,6 +89,7 @@ router.get('/news', function (req, res) {
 		  		'&category=technology' + 
 		  		'&apiKey=' + newsAPIkey
 		}, function(err, response, body) {
+		  //full response
 		  res.send(JSON.stringify(JSON.parse(body), null, 2) );
 		})
 	}
