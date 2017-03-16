@@ -65,6 +65,33 @@ router.register('/api/messages', function(req, res){
         return utils.send(req, res, {message: "Successfully added new message.", data: message});
     });
 
+  } else if(req.method == 'PUT') {
+    console.log(requestBody);
+
+    var reqObj = JSON.parse(requestBody);
+    //var message = new Message();
+    
+    Message.findById(reqObj._id, function (err, message) {
+      if (err) {
+        console.log(err);
+        return utils.send(req, res, req);
+      } else {
+        console.log('found message ! => reqObj._id: ', reqObj._id);
+        //utils.send(req, res, {message: "Successfully updated message.", data: message});
+        message.timestamp = Date.now(); //Date.now()
+        message.content = reqObj.content;
+
+        message.save(function(err){
+          if(err){
+            console.log(err);
+            return utils.send(req, res, req);
+          } else {
+            return utils.send(req, res, {message: "Successfully updated message.", data: message});
+          }
+        });
+      }
+    });
+
   } else if(req.method == 'DELETE'){
     //console.log(req.params.id); 
     //console.log(requestParams); //same stuff
@@ -87,7 +114,7 @@ var server = http.createServer(function (req, res) {
   requestBody = [];
   //requestParams = {};
  
-  if(req.method == 'POST' || req.method == 'DELETE'){
+  if(req.method == 'POST'|| req.method == 'PUT' || req.method == 'DELETE'){
     req.on('data', chunk => {
       console.log('A chunk of data has arrived: ', chunk);
       requestBody.push(chunk);
