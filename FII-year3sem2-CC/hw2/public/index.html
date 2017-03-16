@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud HW2</title>
+
+    <style>
+    	/*General styles*/
+	body {
+	  padding: 0px;
+	  /*font:14px "Lucida Grande",Helvetica,Arial,sans-serif;*/
+	  font-family: "Trebuchet MS", Helvetica, sans-serif;
+	  overflow-x: hidden;
+	}
+
+	a {
+	  color: #00B7FF;
+	}
+
+	/*Message changes*/
+	.message-widget {
+	  min-height: 50rem;
+	  max-height: 50rem;
+	}
+
+	.message-container {
+	  padding: 3rem;
+	  min-height: 30rem;
+	  max-height: 30rem;
+	  overflow-y: auto;
+	}
+
+	.title span {
+	  text-decoration: none;
+	}
+
+	.message-bubble {
+	  padding: 3px;
+	  border: 1px solid #e0e0e0;
+	  background-color: #f3f3f3;
+	  border-radius: 10px;
+	  margin-bottom: 1rem;
+	}
+    </style>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ 
+ </head>
+<body ng-app="messageBoard" ng-controller="messageCtrl">
+
+<div class="row">
+	<div class="col-md-8 col-md-offset-1">
+		<div class="panel panel-default message-widget">
+			<div class="panel-heading">
+				<a href="#"><span>Message Widget</span></a>
+			</div>
+
+			<div class="panel panel-default panel-nested">
+				<div class="panel-body message-container" id="msgContainer">
+					<div class="spinner"></div><!-- ng-show="loading" -->
+					<div class="message-bubble" ng-repeat="x in msgList">
+					    <!-- <input type="checkbox" ng-model="x.done"> <span ng-bind="x.msgText"></span> -->
+					    <message></message>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-body">
+				<p>Add a new message to the message board: </p>
+				<form ng-submit="msgAdd()">
+				<div class="form-group">
+				  <label for="msg">Name:</label>
+				  <div class="row">
+					<div class="col-md-6 col-xs-6">
+						<input type="text" class="form-control" id="msg" onblur="keepFocus()" ng-model="msgInput" placeholder="Add New">
+					</div>
+					<div class="col-md-6 btn-group">
+						<!-- Send vanilla js-->
+						<!--
+						<button type="button" class="btn btn-primary" onclick="appendMessage()">Send</button>
+						<button type="button" class="btn btn-danger" onclick="deleteAllMessages()">Delete all</button>
+						-->
+						<!-- Send ng -->
+						<input type="submit" class="btn btn-primary" value="Send">
+						<button class="btn btn-default" ng-click="msgRetrieve()"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+						<!-- Remove ng -->
+						<button class="btn btn-warning" ng-click="msgRemove()">Remove marked</button>
+						<button class="btn btn-danger" ng-click="msgRemoveAll()">Remove all</button>
+					</div>
+				  </div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+	
+
+	<!-- Remove ng -->
+	
+
+<!-- 	<% include templates/scripttemplate.ejs %> -->
+
+	<!-- Vanilla JS extras -->
+	<script>
+		window.onload = function() {
+		  keepFocus();
+		}
+
+		function keepFocus() {
+		  document.getElementById("msg").focus();
+		}
+
+		/*window.addEventListener("keypress", function(event){
+			if(event.keyCode === 13 && document.activeElement !== 'text') {
+		        //e.preventDefault();
+		        appendMessage();
+		    }
+		});*/
+	</script>
+
+	<!-- Vanilla JS appends --><!--
+	<script>
+		function appendMessage(){
+			//get input value
+			var messageInput = document.getElementById('msg').value;
+			if(messageInput){
+				//create a wrapper node
+				var nodeDiv = document.createElement("div");
+				//create a content node
+				var node = document.createElement("h4");
+				//child of content ndoe
+				var textnode = document.createTextNode(messageInput);
+				node.appendChild(textnode);
+
+				//append content node to wrapper node
+				nodeDiv.appendChild(node);
+
+				nodeDiv.className += "message-bubble";
+
+				var container = document.getElementById("msgContainer");
+				container.appendChild(nodeDiv);
+
+				//reset the content of the input after posting
+				document.getElementById('msg').value = '';
+
+				container.scrollTop = container.scrollHeight;
+			}
+		}
+
+		function deleteAllMessages(){
+			var messageNodes = document.getElementById("msgContainer");
+			while (messageNodes.firstChild) {
+			    messageNodes.removeChild(messageNodes.firstChild);
+			}
+		}
+	</script>-->
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
+	<!-- Angular style -->
+	<!-- <script src="public/simple-ng.js"></script>-->
+	<script src="onefile-ng.js"></script>
+	<!--  <script src="/js/app.js"></script> -->
+
+</body>
+</html>
