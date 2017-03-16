@@ -1,14 +1,31 @@
-var handlerFactory = require('./handler');
+var handlerFactory = require('./server/handler');
 var fs = require('fs');
 var parser = require('url');
 var handlers = {};
+
+function mimeType(path){
+  var data = fs.readFileSync('server/mime.json')
+  var mimeObj = JSON.parse( data );
+
+  var pathExt = path.substr( path.indexOf('.') + 1 );
+  //console.log('pathExt: ', pathExt);
+
+  var mimeType;
+  Object.keys(mimeObj).forEach(function(key) {
+    if (key == pathExt) {
+      //console.log('mimeObj[key]: ', mimeObj[key]);
+      mimeType = mimeObj[key];
+    }
+  });
+  return mimeType || 'text/html';
+}
 
 exports.clear = function() {
   handlers = {};
 }
 
-exports.register = function(url, method) {
-  handlers[url] = handlerFactory.createHandler(method);
+exports.register = function(url, callback) {
+  handlers[url] = handlerFactory.createHandler(callback);
 }
 
 exports.route = function(req) {
@@ -23,7 +40,7 @@ exports.missing = function(req) {
   var url = parser.parse(req.url, true);
 
   var checkStr = url.pathname;
-  console.log('url.pathname: ', checkStr);
+  console.log(req.method, checkStr);
 
   //this is a security hole, yo /../../etc/passwd
   var test = checkStr.includes('..');
@@ -34,14 +51,16 @@ exports.missing = function(req) {
   }
 
   try {    
-    data = fs.readFileSync(path);
+    var data = fs.readFileSync(path);
+    //console.log('checkStr: ', checkStr);
+    //console.log('path: ', path);
 
-    console.log('checkStr: ', checkStr);
-    console.log('path: ', path);
+    //mime = req.headers.accepts || mime_type(path);
+    var mime = mimeType(path);
+    console.log('  mime selected: ', mime);
 
-    mime = req.headers.accepts || 'text/html'
     return handlerFactory.createHandler(function(req, res) {
-      res.writeHead(200, {'Content-Type': 'text/html'}); //text/plain
+      res.writeHead(200, {'Content-Type': mime});
       res.write(data);
       res.end();
     });        
