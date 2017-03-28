@@ -2,7 +2,7 @@
   "name": "hw3",
   "version": "0.0.1",
   "description": "a bit of everything",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +14,11 @@
     "mongoose": "^4.9.0",
     "nodemon": "^1.11.0",
     "socket.io": "^1.7.3"
+  },
+  "devDependencies": {
+    "bower": "^1.8.0",
+    "grunt": "^1.0.1",
+    "grunt-bowercopy": "^1.2.4",
+    "grunt-contrib-watch": "^1.0.0"
   }
 }

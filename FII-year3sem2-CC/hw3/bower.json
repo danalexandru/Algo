@@ -1,0 +1,15 @@
+{
+  "name": "hw3",
+  "description": "a bit of everything",
+  "main": "server.js",
+  "authors": [
+    "Dan Alexandru <dan.alexandru@info.uaic.ro>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/xR86/algo",
+  "private": true,
+  "dependencies": {
+    "material-design-lite": "^1.3.0",
+    "pixi.js": "^4.4.3"
+  }
+}
