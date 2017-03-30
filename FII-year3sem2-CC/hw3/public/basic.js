@@ -43,12 +43,18 @@ bunny.on('pointerdown', onClick);
 bunny.anchor.set(0.5);
 
 // move the sprite to the center of the screen
-bunny.x = app.renderer.width / 2;
-bunny.y = app.renderer.height / 2;
+//bunny.x = app.renderer.width / 2;
+//bunny.y = app.renderer.height / 2;
+
+bunny.x = Math.floor((Math.random() * (boxWidth - bound)) + bound); // [bound, boxWidth-bound]
+bunny.y = Math.floor((Math.random() * (boxHeight - bound)) + bound); // similar
+
+bunny.tint = Math.random() * 0xFFFFFF;
 
 app.stage.addChild(bunny);
 
 
+console.log('bunny: ');
 console.dir(bunny);
 
 // Listen for animate update
@@ -56,7 +62,7 @@ app.ticker.add(function(delta) {
     // just for fun, let's rotate mr rabbit a little
     // delta is 1 if running at 100% performance
     // creates frame-independent tranformation
-    bunny.rotation += 0.1 * delta;
+    //bunny.rotation += 0.1 * delta;
 });
 
 
@@ -118,3 +124,55 @@ function onKeyDown(key) {
         }
     }
 }
+
+
+
+var bunnyID = null;
+
+$.get( '/id', function( data ) {
+  console.log('id is');
+  console.log(data);
+  bunnyID = data;
+}).then(function(){
+  handleSocket();
+});
+
+
+function handleSocket(){
+    var socket = io();
+    //socket.emit('new player', JSON.stringify(bunny, null, 2));
+    
+    var newBunny = {};
+    newBunny.x      = bunny.x;
+    newBunny.y      = bunny.y;
+    newBunny.tint   = bunny.tint;
+    newBunny.scale  = {};
+    newBunny.scale.x  = bunny.scale._x;
+    newBunny.scale.y  = bunny.scale._y;
+    newBunny.id       = bunnyID;
+
+    console.log('newBunny');
+    console.dir(newBunny);
+    socket.emit('new player', JSON.stringify(newBunny, null, 2));
+
+    socket.on('new player', function(otherBunny){
+      //app.stage.addChild( JSON.parse(otherBunny) ); //circular reference: e = {}, e.parent = e ...
+      
+      otherBunny = JSON.parse(otherBunny);
+      console.log('otherBunny');
+      console.dir(otherBunny);
+
+      if(otherBunny.id != bunnyID){
+          var newBunny = PIXI.Sprite.fromImage('assets/bunny.png');
+          newBunny.anchor.set(0.5);
+
+          newBunny.x      = otherBunny.x;
+          newBunny.y      = otherBunny.y;
+          newBunny.tint   = otherBunny.tint;
+          newBunny.scale  = otherBunny.scale;
+
+          app.stage.addChild( newBunny );
+      }
+    });
+}
+
