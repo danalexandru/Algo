@@ -11,6 +11,7 @@ FII-SI/exe2/*
 
 # Ignore data files
 **/safe_*
+**/patch_*
 **/safe/*
 **/vendor/*
 

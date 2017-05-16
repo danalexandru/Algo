@@ -38,6 +38,11 @@ io.on('connection', function(socket){
   
 });
 
+app.get('/webcam', function(req, res){
+  res.sendFile(__dirname + '/public/webcam.html');
+});
+
+
 http.listen(port, function(){
   console.log('listening on *:' + port);
 });
