@@ -3,6 +3,8 @@ var fs = require('fs');
 var parser = require('url');
 var handlers = {};
 
+var utils = require('./server/utils');
+
 function mimeType(path){
   var data = fs.readFileSync('server/mime.json')
   var mimeObj = JSON.parse( data );
@@ -66,9 +68,13 @@ exports.missing = function(req) {
     });        
   } catch (e) { 
     return handlerFactory.createHandler(function(req, res) {
-      res.writeHead(404, {'Content-Type': 'text/plain'}); //text/plain
-      res.write("No route registered for " + url.pathname);
-      res.end();
+      // hardcoded response
+      // res.writeHead(404, {'Content-Type': 'text/plain'}); //text/plain
+      // res.write("No route registered for " + url.pathname);
+      // res.end();
+      //or
+      res.writeHead(404, {'Content-Type': 'text/plain'});
+      utils.redirect(req, res, '404.html')
     });      
   }  
 }
