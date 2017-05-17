@@ -21,6 +21,14 @@ exports.params = function(req){
 }
 
 exports.redirect = function (req, res, address){
+  // HACK: if using this on 404 createHandler call, it will add indefinetly to the path ...
+  //req.url += address;
+  //console.log('substr: ' + address.substr( address.indexOf('/') + 1 ));
+
+  // solution
+  //console.log('before - req.url: ' + req.url);
+  req.url = '/';
+  //console.log('after - req.url: ' + req.url);
   req.url += address;
 
   res.writeHead(302, {'Location': req.url});
