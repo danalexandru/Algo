@@ -22,6 +22,8 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+
+/**** main page ****/
 app.get('/id', function(req, res){
   //console.log(req);
   res.send(req.sessionID);
@@ -35,11 +37,21 @@ io.on('connection', function(socket){
   socket.on('new player', function(otherBunny){
     io.emit('new player', otherBunny);
   });
+
+  socket.on('stream', function(img){
+    io.emit('stream', img);
+  });
   
 });
 
-app.get('/webcam', function(req, res){
-  res.sendFile(__dirname + '/public/webcam.html');
+
+/**** webcam page ****/
+app.get('/webcam-stream', function(req, res){
+  res.sendFile(__dirname + '/public/webcamStream.html');
+});
+
+app.get('/webcam-client', function(req, res){
+  res.sendFile(__dirname + '/public/webcamClient.html');
 });
 
 
