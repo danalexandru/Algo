@@ -4,6 +4,7 @@ var session = require('express-session')
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var ss = require('socket.io-stream');
 
 var path = require('path');
 var port = process.env.PORT || 3000;
@@ -41,6 +42,20 @@ io.on('connection', function(socket){
   socket.on('stream', function(img){
     io.emit('stream', img);
   });
+ 
+  // var filename = 'profile.jpg';
+  // ss(socket).on('stream-image', function(stream, data) {
+  //   var filename = path.basename(data.name);
+  //   stream.pipe(fs.createWriteStream(filename));
+  // });
+  
+  // ss(socket).on('file', function(stream) {
+  //   fs.createReadStream('/path/to/file').pipe(stream);
+  // });
+    
+  // ss(socket).emit('file', stream);
+  // stream.pipe(fs.createWriteStream('file.txt'));
+
   
 });
 
