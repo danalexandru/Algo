@@ -80,11 +80,14 @@
   </main>
 </div>
 
+
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script>
 	function getImage(canvas, image){
-		canvas.height = image.height;
-		canvas.width = image.width;
+		// canvas.height = image.height;
+		// canvas.width = image.width;
+		canvas.height = 300;
+		canvas.width = 300;
 		canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
 	}
 	
@@ -97,7 +100,9 @@
 		var socket = io();
 
 		socket.on('stream', function(img){
-			getImage(canvas, img);
+			var image = new Image();
+			image.src = img;
+			getImage(canvas, image);
 		});
 	};
 
@@ -105,9 +110,6 @@
 	// buttonStop.onclick = function() {
 	// 	window.clearInterval(intervalHolder);
 	// };
-
-	
-
 </script>
 
 </body>

@@ -67,14 +67,26 @@
       </div> -->
       <video id="video" width="300" height="300"></video>
 
-      <canvas id="emulation"></canvas>
+      <canvas id="emulation1"></canvas>
 
-      <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
+ <!--      <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
         <p>Start / stop stream</p>
       </div>
+ -->
+ 	  <div class="mdl-cell mdl-cell--3-col">
+	      <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="start1" type="button" disabled="true" value="Start traditional polling"></input>
+	      <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="stop1" type="button" disabled="true" value="Stop stream"></input>
+      </div>
 
-      <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="start" type="button" disabled="true" value="Start stream"></input>
-      <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="stop" type="button" disabled="true" value="Stop stream"></input>
+      <div class="mdl-cell mdl-cell--3-col">
+	      <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="start2" type="button" disabled="true" value="Start long polling"></input>
+	      <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="stop2" type="button" disabled="true" value="Stop stream"></input>
+	  </div>
+
+      <div class="mdl-cell mdl-cell--3-col">
+	      <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="start3" type="button" disabled="true" value="Start http streaming"></input>
+	      <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="stop3" type="button" disabled="true" value="Stop stream"></input>
+	  </div>
 
     </div>
   </main>
@@ -96,97 +108,27 @@ navigator.mediaDevices.getUserMedia(constraints)
 .catch(function(err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
 </script> -->
 
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="public/js/imageUtils.js"></script>
+<script src="public/vendor/socket.io-stream.js"></script>
 <script>
-
-//accomodate for padding
-function drawImageProp(canvas, img, x, y, w, h, offsetX, offsetY) {
-	    if (arguments.length === 2) {
-	        x = y = 0;
-	        w = canvas.width;
-	        h = canvas.height;
-	    }
-
-	    // default offset is center
-	    offsetX = typeof offsetX === "number" ? offsetX : 0.5;
-	    offsetY = typeof offsetY === "number" ? offsetY : 0.5;
-
-	    // keep bounds [0.0, 1.0]
-	    if (offsetX < 0) offsetX = 0;
-	    if (offsetY < 0) offsetY = 0;
-	    if (offsetX > 1) offsetX = 1;
-	    if (offsetY > 1) offsetY = 1;
-
-	    var iw = img.width,
-	        ih = img.height,
-	        r = Math.min(w / iw, h / ih),
-	        nw = iw * r,   // new prop. width
-	        nh = ih * r,   // new prop. height
-	        cx, cy, cw, ch, ar = 1;
-
-	    // decide which gap to fill    
-	    if (nw < w) ar = w / nw;                             
-	    if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
-	    nw *= ar;
-	    nh *= ar;
-
-	    // calc source rectangle
-	    cw = iw / (nw / w);
-	    ch = ih / (nh / h);
-
-	    cx = (iw - cw) * offsetX;
-	    cy = (ih - ch) * offsetY;
-
-	    // make sure source rectangle is valid
-	    if (cx < 0) cx = 0;
-	    if (cy < 0) cy = 0;
-	    if (cw > iw) cw = iw;
-	    if (ch > ih) ch = ih;
-
-	    // fill image in dest. rectangle
-	    canvas.getContext("2d").drawImage(img, cx, cy, cw, ch,  x, y, w, h);
-	}
-
-	function getImage(canvas, video){
-		// var hRatio = canvas.width  / video.width    ;
-		// var vRatio =  canvas.height / video.height  ;
-		// var ratio  = Math.min ( hRatio, vRatio );
-
-		// var centerShift_x = ( canvas.width - video.width*ratio ) / 2;
-		// var centerShift_y = ( canvas.height - video.height*ratio ) / 2;
-
-		// //canvas.clearRect(0,0,canvas.width, canvas.height);
-		// canvas.getContext("2d").drawImage(video, 0,0, video.width, video.height,
-		// 	centerShift_x, centerShift_y, video.width*ratio, video.height*ratio);  
-		
-		
-		canvas.height = video.height;
-		canvas.width = video.width;
-		canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
-
-		//long format
-		// canvas.getContext("2d").drawImage(video, 0, 0, video.width, video.height,
-		// 										 0, 0, canvas.width, canvas.height);
-
-		// var pngUrl = canvas.toDataURL(); //image/png by default
-		// console.log(pngUrl);
-
-		
-		// canvas.height = video.height;
-		// canvas.width = video.width;
-		// drawImageProp(canvas, video, 0, 0, canvas.width, canvas.height); //300 or video...
-
-		// video.onload = function() ??
-	}
-
-
 	var constraints =  { video: { width: 300, height: 300 } };// audio: true, video: true }; //width: 1280, height: 720
 
 	navigator.mediaDevices.getUserMedia(constraints)
 	.then(function(stream) {
+		//window.localStream = stream;
 		var video = document.getElementById("video");
-		var canvas = document.getElementById("emulation");
-		var buttonStart = document.getElementById("start");
-		var buttonStop = document.getElementById("stop");
+		var canvas = document.getElementById("emulation1");
+
+		var buttonStart1 = document.getElementById("start1");
+		var buttonStop1 = document.getElementById("stop1");
+
+		var buttonStart2 = document.getElementById("start2");
+		var buttonStop2 = document.getElementById("stop2");
+
+		var buttonStart3 = document.getElementById("start3");
+		var buttonStop3 = document.getElementById("stop3");
+
 
 		//video.src = stream;
 		video.srcObject = stream;
@@ -194,25 +136,104 @@ function drawImageProp(canvas, img, x, y, w, h, offsetX, offsetY) {
 			video.play();
 		};
 
+		var socket = null;
+		/**** traditional polling ****/
+		//executes every 40ms, is async but img may not be served in <40s,
+			// so you will end up dropping frames
+		//emits an image on the stream every 41.6ms
 		var intervalHolder = null;
-		buttonStart.disabled = false;
-		buttonStart.onclick = function() {
-			//getImage(canvas, video);
+		var recursiveContinue = true;
+
+		buttonStart1.disabled = false;
+		buttonStart1.onclick = function() {
+			console.log('---Started websocket---');
+
+			socket = io();
+
+			//method 1
    			intervalHolder = window.setInterval(function(){ 
-   				getImage(canvas, video);
-   			}, 41.6);
+   				var pngUrl = setImage(canvas, video).toDataURL(); //image/png by default
+				// console.log(pngUrl);
+				socket.emit('stream', pngUrl);
+   			}, 41.6); //ia ~114ms in medie sa fie emise
+   			// 1000ms     24FPS  =  41.6ms
+			//             		 = 114  ms 
+			//          	   -> diff = 72.4 (almost 2 frames that are lost) -> de 2.78 ori mai incet
+			//                for every frame elapsed, ~2 frames are droppeds
    			//1000ms = 1s 
    			// 1000/35 (FPS) ~= 28.6 ms
    			// 1000/24 (FPS) ~= 41.6 ms
+   			
+   			//method 2
+   			// (function recursiveSend(){
+   			// 	if(recursiveContinue){
+		   	// 		setTimeout(function(){
+		   	// 			var pngUrl = setImage(canvas, video).toDataURL(); //image/png by default
+						// // console.log(pngUrl);
+						// socket.emit('stream', pngUrl);
+
+		   	// 			recursiveSend();
+		   	// 		}, 41.6);
+		   	// 	} else {
+		   	// 		return;
+		   	// 	}
+	   		// })();
 		};
 
-		buttonStop.disabled = false;
-		buttonStop.onclick = function() {
+		buttonStop1.disabled = false;
+		buttonStop1.onclick = function() {
+			//method 1
 			window.clearInterval(intervalHolder);
+			//method 2
+			// recursiveContinue = false;
+
+			// stream.getTracks().forEach( (track) => {
+			// 	track.stop();
+			// });
 		};
+		
+		/**** long polling ****/
+		var intervalHolder = null;
+
+		buttonStart2.disabled = false;
+		buttonStart2.onclick = function() {
+			console.log('---Started long polling---');
+
+			socket = io.connect('/', {
+			    transports: ['xhr-polling'] //jsonp-polling
+			});
+			//method 1
+   			intervalHolder = window.setInterval(function(){ 
+   				var pngUrl = setImage(canvas, video).toDataURL(); //image/png by default
+				// console.log(pngUrl);
+				socket.emit('stream', pngUrl);
+   			}, 41.6);
+		};
+
+		buttonStop2.disabled = false;
+		buttonStop2.onclick = function() {
+			//method 1
+			window.clearInterval(intervalHolder);
+
+			// stream.getTracks().forEach( (track) => {
+			// 	track.stop();
+			// });
+		};
+
+		/**** streaming ****/
+	    // var stream = ss.createStream();
+	    // var pngUrl = setImage(canvas, video).toDataURL();
+	    // var stream = ss.createStream();
+
+	    // // upload a file to the server.
+	    // ss(socket).emit('stream-image', stream, {size: pngUrl.size});
+	    // ss.createBlobReadStream(pngUrl).pipe(stream);
 
 	})
 	.catch(function(err) { console.log("Error: " + err)});
+
+	
+
 </script>
 
 </body>
