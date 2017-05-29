@@ -10,3 +10,6 @@ Homework [3]: Create a miniproject that implement Comet mechanism. Implement the
 
 ### Bibliography
 - https://socket.io/get-started/chat/
+- http://www.html5gamedevs.com/topic/493-welcome-to-the-pixijs-forum/
+- http://www.html5gamedevs.com/topic/494-pixijs-showcase/
+- https://www.liquidint.com/blog/recipe-for-real-time-multiplayer-with-html5-canvas-nodejs-part-2-client/
