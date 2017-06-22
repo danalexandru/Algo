@@ -1,4 +1,8 @@
-# algo
+# Algo
+a bit of everything
+  
+  
+### ...
 
 pip install pyserial
 README: https://sourceforge.net/projects/pywin32/
