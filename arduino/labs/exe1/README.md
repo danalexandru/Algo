@@ -2,7 +2,7 @@
 a bit of everything
     
   
-### Draw digits using HEX on Arduino w Multifunctional Shield
+### Display digits using HEX on Arduino w Multifunctional Shield
 
 Start with a vector of bits of 1s
 Read from right to left and make bits 0 only if their respective letter is mentioned

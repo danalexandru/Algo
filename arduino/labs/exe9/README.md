@@ -2,7 +2,15 @@
 a bit of everything
   
   
-### ...
+### Using push buttons as a controller for PC
+
+![](img.png)
+> Fritzing diagram available
+
+I've used some push buttons that, when pushed, write to serial, and on the other side a python script listens and executes specific keyboard commands for the button pushed. (could have been simpler with a Leonardo board, which can emulate a keyboard i believe)
+
+
+#### Installation
 
 pip install pyserial
 README: https://sourceforge.net/projects/pywin32/
