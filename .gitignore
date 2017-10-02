@@ -4,10 +4,10 @@ hello-django.py
 code-various/mysite/*
 
 FII-SI/**/word_dict.txt
-FII-SI/test/*
+FII-SI/hw1/test/*
 FII-SI/**/*.zip
-FII-SI/exe1/*
-FII-SI/exe2/*
+FII-SI/hw1/exe1/*
+FII-SI/hw1/exe2/*
 FII-year3sem1-NET/*
 
 # Ignore data files
