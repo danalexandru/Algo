@@ -1,0 +1,103 @@
+<html>
+	<head>
+		<title>PWA !</title>
+	</head>
+<body>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<style>
+		.smaller-font{
+			font-size: 0.8rem;
+		}
+
+		body{
+			background: url(background.jpeg);
+			background-size: cover;
+			background-repeat: no-repeat;
+
+			/*width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			position: absolute;
+			z-index: -1;
+			content: "";*/
+			opacity: 0.9;
+		}
+	</style>
+
+	<p>&nbsp;</p>
+
+	<div class="container">
+	  <div class="row">
+		<div class="col-sm card" id="container">
+		  <p>&nbsp;</p>
+
+		  <div class="card-body">
+		  	<img src="thumb-img.jpg" alt="..." class="col-4 img-thumbnail">
+
+		  	<button type="button" id="fetchBtn" class="btn btn-outline-primary btn-sm col-2">Fetch</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<p>&nbsp;</p>
+
+	<div class="container smaller-font">
+	  <div class="row">
+		<div class="col-sm card">
+		  <p>Utils:</p>
+		  <ul>
+		  	<li>
+		  		<span>chrome://inspect/#service-workers</span>
+		  		<!-- onclick="window.open('chrome://inspect/#service-workers', null); -->
+		  	</li>
+		  	<li>
+		  		<span>chrome://serviceworker-internals</span>
+		  	</li>
+		  </ul>
+
+		  <p>Reference:</p>
+		  <ul>
+			<li>
+				codepen: cookies vs local storage vs session storage - <a href="https://codepen.io/beaucarnes/pen/KmeRMx">codepen.io/beaucarnes/pen/KmeRMx</a>
+			</li>
+			<li>
+				google service worker tutorial - <a href="https://developers.google.com/web/fundamentals/primers/service-workers/">https://developers.google.com/web/fundamentals/primers/service-workers/</a>
+			</li>
+		  </ul>
+
+		</div>
+	  </div>
+	</div>
+
+	<script src="hello.js"></script>
+	<script>
+
+		document.getElementById('fetchBtn').addEventListener('click', function(){
+				fetch('https://dog.ceo/api/breeds/list/all')
+					.then(resp => resp.json())
+					.then(respJson => {
+						console.log(respJson);
+					})
+					.catch(err => console.log(err)); // asta pica doar de la timeout, CORS, nu la erori ce tin de server (gen http errors)
+			})
+	</script>
+
+	<script>
+		/** Service Worker */
+		if ('serviceWorker' in navigator) {
+		    navigator.serviceWorker.register('serviceWorker.js').then(() => {
+		        // some stuff here done later
+		        console.log('service worker registered');
+		    });
+		}
+	</script>
+	<script src="serviceWorker.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>

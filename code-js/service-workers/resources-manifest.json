@@ -1,0 +1,13 @@
+{
+    "TO_PRECACHE": [
+        "hello.js",
+        "background.jpeg",
+        "thumb-img.jpg",
+        "serviceWorker.js",
+        "webWorker.js",
+        "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js",
+        "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    ],
+    "VERSION": 1
+}
