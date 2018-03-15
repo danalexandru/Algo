@@ -7,6 +7,7 @@ var chromeBookmarksLink = 'chrome-extension://eemcgdkfndhakfknompkggombfjjjeno/m
 
 
 $(function() {
+	var bookmarkData = null;
 
 	function loopFoldersRec(parentId, parentObject){
 		//console.log('Looping through root folders');
@@ -54,6 +55,8 @@ $(function() {
 				//rootFolderContainer = parent;
 				console.log(parentObject);
 
+				bookmarkData = parentObject;
+
 				loopFoldersRec('#bookmarkContainer', parentObject);
 				console.log('###################');
 			}
@@ -69,6 +72,34 @@ $(function() {
 	$('#clear-output').click(function(){
 		console.log('Clearing output');
 		$('#bookmarkContainer').empty();
+	});
+
+	// https://stackoverflow.com/questions/4845215/making-a-chrome-extension-download-a-file
+	$('#download-bookmarks-json').click(function(){
+		console.log('Download bookmarks');
+
+		var exportObj = bookmarkData;
+		var exportName = 'safe_bookmarks.json';
+
+		var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+		var node = document.createElement('a');
+
+		node.download = exportName;
+		node.href = dataStr;
+		node.click();
+
+		chrome.downloads.download({
+		  url: dataStr,
+		  filename: exportName// Optional
+		});
+	});
+
+	//https://stackoverflow.com/questions/11257062/converting-json-object-to-csv-format-in-javascript
+	$('#download-bookmarks-csv').click(function(){
+		console.log('Download bookmarks');
+
+		// var exportObj = bookmarkData;
+		// var exportName = 'safe_bookmarks.csv';
 	});
 
 	function setBadge(){
