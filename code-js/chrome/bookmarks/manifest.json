@@ -5,6 +5,7 @@
   "permissions": [
     //"background",
     "bookmarks",
+    "downloads",
     "tabs"
   ],
   "options_page": "options.html",
